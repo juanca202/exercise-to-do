@@ -4,7 +4,17 @@ import { useCallback, useEffect, useState } from "react";
 
 import { TodoForm } from "@/components/todo-form";
 import { TodoList } from "@/components/todo-list";
-import { loadTodos, saveTodos, type Todo } from "@/lib/todos";
+import {
+  loadTodos,
+  saveTodos,
+  sortTodosByPriority,
+  updateTodo,
+  type Todo,
+} from "@/lib/todos";
+
+function withSortedOrder(todos: Todo[]): Todo[] {
+  return sortTodosByPriority(todos);
+}
 
 export function TodosApp() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -12,14 +22,15 @@ export function TodosApp() {
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- carga única al montar
-    setTodos(loadTodos());
+    setTodos(withSortedOrder(loadTodos()));
   }, []);
 
   const persist = useCallback((next: Todo[] | ((previous: Todo[]) => Todo[])) => {
     setTodos((previous) => {
       const resolved = typeof next === "function" ? next(previous) : next;
-      saveTodos(resolved);
-      return resolved;
+      const sorted = withSortedOrder(resolved);
+      saveTodos(sorted);
+      return sorted;
     });
   }, []);
 
@@ -47,6 +58,19 @@ export function TodosApp() {
     }
   }
 
+  function handleToggleStatus(id: string) {
+    persist((previous) =>
+      previous.map((item) => {
+        if (item.id !== id) {
+          return item;
+        }
+
+        const nextStatus = item.status === "completed" ? "pending" : "completed";
+        return updateTodo(item, { status: nextStatus });
+      }),
+    );
+  }
+
   return (
     <div className="flex w-full max-w-lg flex-col gap-8">
       <TodoForm
@@ -60,7 +84,12 @@ export function TodosApp() {
         <h2 id="todos-list-heading" className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
           Tareas
         </h2>
-        <TodoList todos={todos} onEdit={handleEdit} onDelete={handleDelete} />
+        <TodoList
+          todos={todos}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onToggleStatus={handleToggleStatus}
+        />
       </section>
     </div>
   );
