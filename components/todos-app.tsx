@@ -4,7 +4,13 @@ import { useCallback, useEffect, useState } from "react";
 
 import { TodoForm } from "@/components/todo-form";
 import { TodoList } from "@/components/todo-list";
-import { loadTodos, saveTodos, sortTodosByPriority, type Todo } from "@/lib/todos";
+import {
+  loadTodos,
+  saveTodos,
+  sortTodosByPriority,
+  updateTodo,
+  type Todo,
+} from "@/lib/todos";
 
 function withSortedOrder(todos: Todo[]): Todo[] {
   return sortTodosByPriority(todos);
@@ -52,6 +58,19 @@ export function TodosApp() {
     }
   }
 
+  function handleToggleStatus(id: string) {
+    persist((previous) =>
+      previous.map((item) => {
+        if (item.id !== id) {
+          return item;
+        }
+
+        const nextStatus = item.status === "completed" ? "pending" : "completed";
+        return updateTodo(item, { status: nextStatus });
+      }),
+    );
+  }
+
   return (
     <div className="flex w-full max-w-lg flex-col gap-8">
       <TodoForm
@@ -65,7 +84,12 @@ export function TodosApp() {
         <h2 id="todos-list-heading" className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
           Tareas
         </h2>
-        <TodoList todos={todos} onEdit={handleEdit} onDelete={handleDelete} />
+        <TodoList
+          todos={todos}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onToggleStatus={handleToggleStatus}
+        />
       </section>
     </div>
   );
