@@ -16,7 +16,9 @@ const sampleTodo: Todo = {
 
 describe("TodoList — SC-04", () => {
   it("muestra descripción y prioridad en español", () => {
-    render(<TodoList todos={[sampleTodo]} onEdit={vi.fn()} onDelete={vi.fn()} />);
+    render(
+      <TodoList todos={[sampleTodo]} onEdit={vi.fn()} onDelete={vi.fn()} onToggleStatus={vi.fn()} />,
+    );
 
     expect(screen.getByText("Comprar leche")).toBeInTheDocument();
     expect(screen.getByText("media")).toBeInTheDocument();
@@ -26,10 +28,49 @@ describe("TodoList — SC-04", () => {
     const user = userEvent.setup();
     const onDelete = vi.fn();
 
-    render(<TodoList todos={[sampleTodo]} onEdit={vi.fn()} onDelete={onDelete} />);
+    render(
+      <TodoList todos={[sampleTodo]} onEdit={vi.fn()} onDelete={onDelete} onToggleStatus={vi.fn()} />,
+    );
 
     await user.click(screen.getByRole("button", { name: "Eliminar" }));
 
     expect(onDelete).toHaveBeenCalledWith("todo-1");
+  });
+});
+
+describe("TodoList — US-003", () => {
+  it("aplica estilo completado y llama onToggleStatus", async () => {
+    const user = userEvent.setup();
+    const onToggleStatus = vi.fn();
+    const completed: Todo = { ...sampleTodo, status: "completed" };
+
+    const { rerender } = render(
+      <TodoList
+        todos={[sampleTodo]}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+        onToggleStatus={onToggleStatus}
+      />,
+    );
+
+    const title = screen.getByText("Comprar leche");
+    expect(title).not.toHaveClass("line-through");
+
+    await user.click(
+      screen.getByRole("checkbox", { name: "Marcar «Comprar leche» como completada" }),
+    );
+    expect(onToggleStatus).toHaveBeenCalledWith("todo-1");
+
+    rerender(
+      <TodoList
+        todos={[completed]}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+        onToggleStatus={onToggleStatus}
+      />,
+    );
+
+    expect(screen.getByText("Comprar leche")).toHaveClass("line-through");
+    expect(screen.getByText("media")).toBeInTheDocument();
   });
 });
