@@ -4,7 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 
 import { TodoForm } from "@/components/todo-form";
 import { TodoList } from "@/components/todo-list";
-import { loadTodos, saveTodos, type Todo } from "@/lib/todos";
+import { loadTodos, saveTodos, sortTodosByPriority, type Todo } from "@/lib/todos";
+
+function withSortedOrder(todos: Todo[]): Todo[] {
+  return sortTodosByPriority(todos);
+}
 
 export function TodosApp() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -12,14 +16,15 @@ export function TodosApp() {
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- carga única al montar
-    setTodos(loadTodos());
+    setTodos(withSortedOrder(loadTodos()));
   }, []);
 
   const persist = useCallback((next: Todo[] | ((previous: Todo[]) => Todo[])) => {
     setTodos((previous) => {
       const resolved = typeof next === "function" ? next(previous) : next;
-      saveTodos(resolved);
-      return resolved;
+      const sorted = withSortedOrder(resolved);
+      saveTodos(sorted);
+      return sorted;
     });
   }, []);
 
