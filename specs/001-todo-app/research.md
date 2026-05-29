@@ -74,7 +74,7 @@ Tareas completadas: opacidad reducida + `line-through` en descripción, conserva
 
 ## 5. Ordenación
 
-**Decision**: Función pura `sortTodosByPriority(todos)` en `src/features/todos/lib/sort.ts`; orden: prioridad (alta→media→baja), desempate por `createdAt` ascendente.
+**Decision**: Función pura `sortTodosByPriority(todos)` en `src/features/todos/lib/sort.ts`; orden: prioridad (alta→media→baja); desempate `createdAt` ascendente (más antigua primero); desempate final por `id` lexicográfico si empatan timestamps.
 
 **Rationale**: FR-004 y edge case de empate en misma prioridad. Lógica pura facilita tests unitarios co-located ([ADR-005](../../docs/adr/ADR-005-unit-testing-strategy.md)).
 

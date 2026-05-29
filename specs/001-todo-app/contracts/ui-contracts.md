@@ -4,6 +4,19 @@
 
 Contratos de interfaz entre la página principal, modales y el store. No hay API HTTP; la frontera externa es la UI del usuario.
 
+## Entrega incremental (alineado con tasks.md)
+
+El contrato siguiente describe el **estado final** de la UI. La implementación se entrega por fases:
+
+| Capacidad en TodosPage / ítem   | User story | Componentes principales                           |
+| ------------------------------- | ---------- | ------------------------------------------------- |
+| Listado + empty + crear (modal) | US1        | `TodosPage`, `TodoList`, `TaskFormModal` (create) |
+| Editar (modal)                  | US2        | `TaskFormModal` (edit), botón Editar en ítem      |
+| Eliminar (modal confirmación)   | US3        | `DeleteConfirmModal`, botón Eliminar              |
+| Toggle completada               | US4        | Checkbox/toggle en `TodoListItem`                 |
+
+Hasta completar la user story indicada, los eventos de fases posteriores no son obligatorios en la UI.
+
 ---
 
 ## 1. TodosPage (vista principal)
@@ -13,9 +26,12 @@ Contratos de interfaz entre la página principal, modales y el store. No hay API
 
 ### Responsibilities
 
-- Renderizar listado ordenado de tareas o estado vacío (FR-012).
-- Exponer acción "Nueva tarea" que abre `TaskFormModal` en modo `create`.
-- Delegar acciones por ítem: editar, eliminar, toggle completada.
+- Renderizar listado ordenado de tareas o estado vacío (FR-012) — **US1**.
+- Exponer acción "Nueva tarea" que abre `TaskFormModal` en modo `create` — **US1**.
+- Delegar acciones por ítem según fase:
+  - editar — **US2**
+  - eliminar — **US3**
+  - toggle completada — **US4**
 
 ### Props
 
@@ -25,12 +41,12 @@ Contratos de interfaz entre la página principal, modales y el store. No hay API
 
 ### Events (user → system)
 
-| Action                     | Effect                                      |
-| -------------------------- | ------------------------------------------- |
-| Click "Nueva tarea"        | Open TaskFormModal (`mode: create`)         |
-| Click editar en ítem       | Open TaskFormModal (`mode: edit`, `todoId`) |
-| Click eliminar en ítem     | Open DeleteConfirmModal (`todoId`)          |
-| Toggle checkbox completada | `store.toggleStatus(id)`                    |
+| Action                     | Effect                                        | Fase |
+| -------------------------- | --------------------------------------------- | ---- |
+| Click "Nueva tarea"        | Open `TaskFormModal` (`mode: create`)         | US1  |
+| Click editar en ítem       | Open `TaskFormModal` (`mode: edit`, `todoId`) | US2  |
+| Click eliminar en ítem     | Open `DeleteConfirmModal` (`todoId`)          | US3  |
+| Toggle checkbox completada | `store.toggleStatus(id)`                      | US4  |
 
 ---
 

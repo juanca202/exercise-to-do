@@ -4,14 +4,21 @@
 
 **Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/ui-contracts.md, quickstart.md
 
-**Tests**: No se incluyen tareas de test dedicadas (no solicitado en spec). ADR-005 recomienda tests co-located; pueden añadirse en polish o en implementación según criterio del equipo.
+**Tests (TDD)**: Enfoque **Test-Driven Development** según [ADR-005](../../docs/adr/ADR-005-unit-testing-strategy.md):
 
-**Organization**: Tareas agrupadas por user story para implementación y validación independiente.
+1. **RED** — Escribir test co-located (`*.test.ts(x)`) que falle; patrón AAA; datos con Object Mothers (`testing/todo-mothers.ts`).
+2. **GREEN** — Implementar el mínimo código para que el test pase.
+3. **REFACTOR** — Mejorar sin romper tests (misma tarea GREEN o commit aparte).
+
+Cada par RED→GREEN está en orden de ejecución. No marcar GREEN como hecha si los tests RED correspondientes siguen fallando. Objetivo final: ≥80 % cobertura de **ramas** en `lib/`, `store/` y componentes con lógica de negocio (`npm run test:run`).
+
+**Organization**: Tareas agrupadas por user story; dentro de cada fase, tests antes de implementación.
 
 ## Format: `[ID] [P?] [Story] Description`
 
-- **[P]**: Ejecutable en paralelo (archivos distintos, sin dependencias entre sí)
-- **[Story]**: User story (US1–US4)
+- **[P]**: Ejecutable en paralelo (archivos distintos, sin dependencias en tareas RED/GREEN incompletas del mismo módulo)
+- **[Story]**: User story (US1–US4); omitido en Setup/Foundational/Polish/Gate
+- **RED** / **GREEN**: Ciclo TDD en la descripción de la tarea
 
 ## Path Conventions
 
@@ -34,104 +41,149 @@
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 
-**Purpose**: Tipos, dominio, store y primitivas UI compartidas — **bloquea todas las user stories**
+**Purpose**: Tipos, dominio, store y primitivas UI — **bloquea todas las user stories**
 
-**⚠️ CRITICAL**: Ninguna user story puede completarse hasta cerrar esta fase
+**⚠️ CRITICAL**: Completar todos los pares RED→GREEN antes de Phase 3
+
+### Tipos y utilidades de test
 
 - [ ] T005 [P] Definir tipos `Todo`, `TodoPriority`, `TodoStatus`, `CreateTodoInput`, `UpdateTodoInput`, `ValidationResult` en `src/features/todos/lib/types.ts`
-- [ ] T006 [P] Implementar reglas VR-001 a VR-006 en `src/features/todos/lib/validation.ts` (`validateCreateInput`, `validateUpdateInput`)
-- [ ] T007 [P] Implementar `sortTodosByPriority` con desempate por `createdAt` en `src/features/todos/lib/sort.ts`
-- [ ] T008 [P] Definir mapa semáforo de estilos de prioridad en `src/features/todos/lib/priority-styles.ts` (alta=rojo, media=ámbar, baja=verde)
-- [ ] T009 [P] Crear Object Mothers `aTodo()`, `aTodoInput()`, `buildTodo()` en `src/features/todos/testing/todo-mothers.ts`
-- [ ] T010 Implementar store Zustand en `src/features/todos/store/todo-store.ts`: estado `todos`, `isHydrated`, acciones `hydrate`, `createTodo`, `updateTodo`, `deleteTodo`, `toggleStatus`, selector `getSortedTodos`, persistencia tras cada mutación vía `localStorage`
-- [ ] T011 [P] Implementar wrapper `Dialog` con Base UI en `src/components/ui/dialog.tsx` (focus trap, cierre Escape, props `open`/`onOpenChange`)
-- [ ] T012 [P] Implementar wrappers `Button` y `Badge` en `src/components/ui/button.tsx` y `src/components/ui/badge.tsx` con Tailwind según DESIGN.md
-- [ ] T013 Exportar API pública de la feature en `src/features/todos/index.ts` (componente página, tipos si aplica)
+- [ ] T006 [P] Crear Object Mothers `aTodo()`, `aTodoInput()`, `buildTodo()` en `src/features/todos/testing/todo-mothers.ts`
 
-**Checkpoint**: Store con CRUD completo y persistencia listo; wrappers UI disponibles
+### validation.ts (TDD)
+
+- [ ] T007 [P] **RED** Escribir tests en `src/features/todos/lib/validation.test.ts`: VR-001–VR-006, rechazo descripción vacía/fecha inválida (FR-010, SC-006); ejecutar `npm run test:run` y confirmar fallo
+- [ ] T008 [P] **GREEN** Implementar `validateCreateInput` / `validateUpdateInput` en `src/features/todos/lib/validation.ts` hasta que T007 pase
+
+### sort.ts (TDD)
+
+- [ ] T009 [P] **RED** Escribir tests en `src/features/todos/lib/sort.test.ts`: orden alta→media→baja (FR-004, SC-002); desempate `createdAt` ascendente; desempate por `id` si empatan timestamps
+- [ ] T010 [P] **GREEN** Implementar `sortTodosByPriority` en `src/features/todos/lib/sort.ts` hasta que T009 pase
+
+### Estilos y store (TDD)
+
+- [ ] T011 [P] **GREEN** Definir mapa semáforo en `src/features/todos/lib/priority-styles.ts` (alta=rojo, media=ámbar, baja=verde) — sin test unitario; cubierto en tests de componente (US1)
+- [ ] T012 **RED** Escribir tests en `src/features/todos/store/todo-store.test.ts`: hydrate, `createTodo`, `updateTodo`, `deleteTodo`, `toggleStatus`, persistencia mock `localStorage` (FR-009); confirmar fallo
+- [ ] T013 **GREEN** Implementar store Zustand en `src/features/todos/store/todo-store.ts` hasta que T012 pase
+
+### UI compartida y export
+
+- [ ] T014 [P] **GREEN** Implementar wrapper `Dialog` con Base UI en `src/components/ui/dialog.tsx` (focus trap, Escape, `open`/`onOpenChange`)
+- [ ] T015 [P] **GREEN** Implementar wrappers `Button` y `Badge` en `src/components/ui/button.tsx` y `src/components/ui/badge.tsx` según DESIGN.md
+- [ ] T016 **GREEN** Exportar API pública en `src/features/todos/index.ts`
+
+**Checkpoint**: `npm run test:run` verde en `lib/` y `store/`; wrappers UI listos
 
 ---
 
 ## Phase 3: User Story 1 - Crear y listar tareas (Priority: P1) 🎯 MVP
 
-**Goal**: Registrar tareas vía modal, listarlas ordenadas por prioridad con colores, estado vacío y persistencia entre sesiones
+**Goal**: Registrar tareas vía modal, listarlas ordenadas por prioridad con colores, estado vacío y persistencia
 
-**Independent Test**: Crear tareas alta/media/baja → listado ordenado con badges de color → recargar → datos persisten → validación rechaza campos vacíos → cancelar modal no crea tarea
+**Independent Test**: Ver escenarios US1 en spec.md y quickstart.md sección P1
 
-### Implementation for User Story 1
+### TaskFormModal — create (TDD)
 
-- [ ] T014 [P] [US1] Implementar `TodoListItem` en `src/features/todos/components/todo-list-item.tsx` (descripción, fecha `es`, badge prioridad con `priority-styles`, sin acciones editar/eliminar/completar aún)
-- [ ] T015 [P] [US1] Implementar `TodoList` en `src/features/todos/components/todo-list.tsx` consumiendo `getSortedTodos()` del store
-- [ ] T016 [P] [US1] Implementar `TaskFormModal` en `src/features/todos/components/task-form-modal.tsx` solo modo `create` (campos descripción, dueDate, priority; validación; Guardar/Cancelar; FR-013, FR-015)
-- [ ] T017 [US1] Implementar `TodoEmptyState` en `src/features/todos/components/todo-empty-state.tsx` con CTA "Crear primera tarea" (FR-012)
-- [ ] T018 [US1] Implementar `TodosPage` Client Component en `src/features/todos/components/todos-page.tsx` (hydrate al montar, listado/empty, botón "Nueva tarea", estado modal crear)
-- [ ] T019 [US1] Conectar `src/app/page.tsx` importando y renderizando `TodosPage` desde `src/features/todos/index.ts`
-- [ ] T020 [US1] Ajustar textos de UI en español y mensajes de error de validación en `src/features/todos/components/task-form-modal.tsx`
+- [ ] T017 [P] [US1] **RED** Escribir tests en `src/features/todos/components/task-form-modal.test.tsx` (modo `create`): guardar válido, rechazo campos vacíos (FR-010), cancelar sin crear (FR-015); confirmar fallo
+- [ ] T018 [P] [US1] **GREEN** Implementar `TaskFormModal` modo `create` en `src/features/todos/components/task-form-modal.tsx` hasta que T017 pase (FR-013)
 
-**Checkpoint**: MVP funcional — crear, listar, ordenar, colores prioridad, persistencia, validación, estado vacío
+### Listado (TDD)
+
+- [ ] T019 [P] [US1] **RED** Escribir tests en `src/features/todos/components/todo-list-item.test.tsx`: muestra descripción/fecha, badge prioridad por color (FR-014, SC-007), estado `pendiente` por defecto; confirmar fallo
+- [ ] T020 [P] [US1] **GREEN** Implementar `TodoListItem` en `src/features/todos/components/todo-list-item.tsx` (sin botones editar/eliminar/toggle) hasta que T019 pase
+- [ ] T021 [P] [US1] **RED** Escribir tests en `src/features/todos/components/todo-list.test.tsx`: lista ordenada vía `getSortedTodos()`; confirmar fallo
+- [ ] T022 [P] [US1] **GREEN** Implementar `TodoList` en `src/features/todos/components/todo-list.tsx` hasta que T021 pase
+
+### Integración US1
+
+- [ ] T023 [US1] **GREEN** Implementar `TodoEmptyState` en `src/features/todos/components/todo-empty-state.tsx` (FR-012)
+- [ ] T024 [US1] **GREEN** Implementar `TodosPage` en `src/features/todos/components/todos-page.tsx` (hydrate, listado/empty, modal crear)
+- [ ] T025 [US1] **GREEN** Conectar `src/app/page.tsx` con `TodosPage`
+- [ ] T026 [US1] **GREEN** Textos UI en español y mensajes de validación en `task-form-modal.tsx`
+
+**Checkpoint**: MVP — `npm run test:run` verde incluyendo tests US1; validar quickstart P1
 
 ---
 
 ## Phase 4: User Story 2 - Editar tareas existentes (Priority: P2)
 
-**Goal**: Editar descripción, fecha y prioridad de tareas existentes vía modal con mismas validaciones que creación
+**Goal**: Editar descripción, fecha y prioridad vía modal; conservar `status` al editar tarea completada (validar tras US4)
 
-**Independent Test**: Crear tarea → editar campos → listado actualizado con nuevo color de prioridad → recargar → cambios persisten → cancelar modal sin cambios → editar tarea completada conserva estado
+**Independent Test**: quickstart.md sección P2; escenario US2.4 requiere tarea `completada` (US4)
 
-### Implementation for User Story 2
+### TaskFormModal — edit (TDD)
 
-- [ ] T021 [US2] Extender `TaskFormModal` en `src/features/todos/components/task-form-modal.tsx` con modo `edit`: precarga datos por `todoId`, llama `updateTodo`, conserva `status` (FR-005, FR-015)
-- [ ] T022 [US2] Añadir botón "Editar" y handler `onEdit` en `src/features/todos/components/todo-list-item.tsx`
-- [ ] T023 [US2] Integrar flujo edición en `src/features/todos/components/todos-page.tsx` (estado modal edit + `todoId`)
-- [ ] T024 [US2] Verificar reordenación del listado tras cambio de prioridad en `src/features/todos/components/todo-list.tsx`
+- [ ] T027 [US2] **RED** Ampliar `src/features/todos/components/task-form-modal.test.tsx`: modo `edit` precarga datos, `updateTodo`, validación, cancelar sin cambios (FR-005, FR-015); confirmar fallo en casos nuevos
+- [ ] T028 [US2] **GREEN** Extender `TaskFormModal` modo `edit` en `task-form-modal.tsx` hasta que T027 pase
 
-**Checkpoint**: Edición completa sin afectar flujo de creación/listado de US1
+### UI edición
+
+- [ ] T029 [US2] **GREEN** Añadir botón Editar y `onEdit` en `todo-list-item.tsx`
+- [ ] T030 [US2] **GREEN** Integrar modal edición en `todos-page.tsx`
+- [ ] T031 [US2] **GREEN** Ampliar `todo-list.test.tsx`: reordenación tras cambio de prioridad
+
+**Checkpoint**: Tests modal + listado verdes; quickstart P2
 
 ---
 
 ## Phase 5: User Story 3 - Eliminar tareas (Priority: P3)
 
-**Goal**: Eliminar tareas con modal de confirmación explícita
+**Goal**: Eliminar con modal de confirmación
 
-**Independent Test**: Eliminar con confirmación → desaparece del listado → recargar → no reaparece → cancelar confirmación → tarea intacta → eliminar última tarea muestra empty state
+**Independent Test**: quickstart.md sección P3
 
-### Implementation for User Story 3
+### DeleteConfirmModal (TDD)
 
-- [ ] T025 [P] [US3] Implementar `DeleteConfirmModal` en `src/features/todos/components/delete-confirm-modal.tsx` con Base UI Dialog (mensaje, Eliminar/Cancelar, FR-006)
-- [ ] T026 [US3] Añadir botón "Eliminar" y handler `onDelete` en `src/features/todos/components/todo-list-item.tsx`
-- [ ] T027 [US3] Integrar flujo eliminación en `src/features/todos/components/todos-page.tsx` (estado modal delete + `todoId`)
-- [ ] T028 [US3] Asegurar transición a `TodoEmptyState` cuando `todos.length === 0` tras eliminar en `src/features/todos/components/todos-page.tsx`
+- [ ] T032 [P] [US3] **RED** Escribir tests en `src/features/todos/components/delete-confirm-modal.test.tsx`: confirmar elimina, cancelar no elimina (FR-006); confirmar fallo
+- [ ] T033 [P] [US3] **GREEN** Implementar `DeleteConfirmModal` en `delete-confirm-modal.tsx` hasta que T032 pase
 
-**Checkpoint**: Eliminación con confirmación modal operativa e independiente de US2
+### UI eliminación
+
+- [ ] T034 [US3] **GREEN** Añadir botón Eliminar y `onDelete` en `todo-list-item.tsx`
+- [ ] T035 [US3] **GREEN** Integrar modal eliminación en `todos-page.tsx`
+- [ ] T036 [US3] **GREEN** Transición a `TodoEmptyState` al eliminar última tarea
+
+**Checkpoint**: quickstart P3; tests delete modal verdes
 
 ---
 
 ## Phase 6: User Story 4 - Marcar tareas como completadas (Priority: P4)
 
-**Goal**: Toggle pendiente/completada con distinción visual clara manteniendo color de prioridad
+**Goal**: Toggle pendiente/completada con estilos distintos y color de prioridad visible
 
-**Independent Test**: Marcar completada → estilo atenuado/tachado visible → desmarcar → vuelve a pendiente → mezcla completadas/pendientes distinguible → recargar → estado persistido
+**Independent Test**: quickstart.md sección P4; SC-004
 
-### Implementation for User Story 4
+### Toggle y estilos (TDD)
 
-- [ ] T029 [US4] Añadir checkbox/toggle de estado y estilos completada (opacidad + `line-through`) en `src/features/todos/components/todo-list-item.tsx` preservando badge de prioridad (FR-007, FR-008)
-- [ ] T030 [US4] Conectar `onToggleStatus` → `store.toggleStatus` en `src/features/todos/components/todo-list.tsx` y `todos-page.tsx`
-- [ ] T031 [US4] Verificar persistencia de `status` en `src/features/todos/store/todo-store.ts` tras `toggleStatus`
-- [ ] T032 [US4] Revisar contraste visual completada vs pendiente cumpliendo SC-004 en `src/features/todos/components/todo-list-item.tsx`
+- [ ] T037 [US4] **RED** Ampliar `todo-list-item.test.tsx`: toggle completada/pendiente, estilos tachado/opacidad con badge prioridad (FR-007, FR-008, SC-004); confirmar fallo
+- [ ] T038 [US4] **GREEN** Implementar checkbox/toggle y estilos en `todo-list-item.tsx` hasta que T037 pase
+- [ ] T039 [US4] **RED** Ampliar `todo-store.test.ts`: persistencia de `status` tras `toggleStatus`
+- [ ] T040 [US4] **GREEN** Conectar `onToggleStatus` en `todo-list.tsx` y `todos-page.tsx`; verificar store si hace falta ajuste
 
-**Checkpoint**: Las cuatro user stories son funcionales de forma independiente
+**Checkpoint**: US2 escenario 4 (editar completada) verificable; quickstart P4
 
 ---
 
 ## Phase 7: Polish & Cross-Cutting Concerns
 
-**Purpose**: Robustez, accesibilidad y validación manual según quickstart
+**Purpose**: Robustez, a11y, validación manual
 
-- [ ] T033 [P] Manejar error de `localStorage` no disponible o quota exceeded con mensaje al usuario en `src/features/todos/store/todo-store.ts`
-- [ ] T034 [P] Añadir atributos ARIA en modales (`aria-labelledby`, `aria-describedby`) en `src/features/todos/components/task-form-modal.tsx` y `delete-confirm-modal.tsx`
-- [ ] T035 Truncar descripción larga en listado con título accesible del texto completo en `src/features/todos/components/todo-list-item.tsx`
-- [ ] T036 Ejecutar checklist manual de `specs/001-todo-app/quickstart.md` y corregir hallazgos
-- [ ] T037 Ejecutar `npm run lint` y `npm run build` corrigiendo errores en archivos de la feature
+- [ ] T041 [P] **GREEN** Manejar error `localStorage` en `todo-store.ts`: mensaje visible al usuario; no cerrar modal de formulario; conservar valores del formulario para reintentar (ampliar `todo-store.test.ts` si aplica)
+- [ ] T042 [P] **GREEN** Atributos ARIA en `task-form-modal.tsx` y `delete-confirm-modal.tsx`
+- [ ] T043 **GREEN** Truncar descripción larga en listado (elipsis) con atributo `title` = texto completo en `todo-list-item.tsx` (sin pérdida de datos al guardar)
+- [ ] T044 Ejecutar checklist manual `specs/001-todo-app/quickstart.md`
+- [ ] T045 Ejecutar `npm run lint` y `npm run build`
+
+---
+
+## Phase 8: Test Gate (ADR-005)
+
+**Purpose**: Cierre de calidad antes de merge
+
+- [ ] T046 Configurar umbral cobertura de ramas (≥80 %) en `vitest.config.ts` para `src/features/todos/lib/**` y `src/features/todos/store/**` (y componentes con lógica si el repo lo permite)
+- [ ] T047 Verificar `npm run test:run` en verde y cobertura cumple ADR-005; documentar excepciones en PR si algún archivo queda fuera
+
+**Checkpoint**: Feature lista para merge desde perspectiva de pruebas
 
 ---
 
@@ -139,133 +191,127 @@
 
 ### Phase Dependencies
 
-| Phase          | Depende de               | Bloquea                  |
-| -------------- | ------------------------ | ------------------------ |
-| 1 Setup        | —                        | Fase 2                   |
-| 2 Foundational | Fase 1                   | Fases 3–6 (user stories) |
-| 3 US1 (P1)     | Fase 2                   | MVP demo                 |
-| 4 US2 (P2)     | Fase 2, US1 listado base | —                        |
-| 5 US3 (P3)     | Fase 2, US1 listado base | —                        |
-| 6 US4 (P4)     | Fase 2, US1 listado base | —                        |
-| 7 Polish       | US1–US4 deseadas         | —                        |
+| Phase          | Depende de     | Bloquea    |
+| -------------- | -------------- | ---------- |
+| 1 Setup        | —              | 2          |
+| 2 Foundational | 1              | 3–6        |
+| 3 US1          | 2 (RED→GREEN)  | MVP        |
+| 4 US2          | 3 listado base | —          |
+| 5 US3          | 3 ítems base   | —          |
+| 6 US4          | 3 ítems base   | US2 esc. 4 |
+| 7 Polish       | 3–6            | 8          |
+| 8 Test Gate    | 7              | Merge      |
+
+### Regla TDD por módulo
+
+No iniciar **GREEN** de un archivo hasta que su **RED** correspondiente exista y haya fallado al menos una vez.
+
+| Módulo            | RED  | GREEN   |
+| ----------------- | ---- | ------- |
+| validation        | T007 | T008    |
+| sort              | T009 | T010    |
+| todo-store        | T012 | T013    |
+| task-form create  | T017 | T018    |
+| todo-list-item    | T019 | T020    |
+| todo-list         | T021 | T022    |
+| task-form edit    | T027 | T028    |
+| delete-modal      | T032 | T033    |
+| toggle completada | T037 | T038–40 |
 
 ### User Story Dependencies
 
-| Story    | Depende de                 | Independiente tras |
-| -------- | -------------------------- | ------------------ |
-| US1 (P1) | Foundational               | T020 — MVP         |
-| US2 (P2) | Foundational + listado US1 | T024               |
-| US3 (P3) | Foundational + ítems US1   | T028               |
-| US4 (P4) | Foundational + ítems US1   | T032               |
+| Story | Independiente tras | Tests clave |
+| ----- | ------------------ | ----------- |
+| US1   | T026               | T017–T022   |
+| US2   | T031               | T027–T028   |
+| US3   | T036               | T032–T033   |
+| US4   | T040               | T037, T039  |
 
-US2, US3 y US4 pueden desarrollarse en paralelo **después** de US1 si el listado e ítems base existen.
+US2/US3/US4 en paralelo **después** del checkpoint US1 (T026), respetando RED antes de GREEN por módulo.
 
-### Within Each User Story
+### Parallel Opportunities (TDD)
 
-1. Componentes hoja (`TodoListItem`, modales) antes que contenedores (`TodosPage`)
-2. Integración en `todos-page.tsx` antes de cablear `page.tsx` (solo US1)
-3. Validar checkpoint con quickstart antes de pasar a la siguiente story
+**Fase 2** (tras T005–T006):
 
-### Parallel Opportunities
-
-**Fase 1**: T002, T003, T004 en paralelo tras T001
-
-**Fase 2**: T005–T009 y T011–T012 en paralelo; T010 tras T005–T008
-
-**Fase 3 (US1)**: T014, T015, T016, T017 en paralelo; luego T018 → T019 → T020
-
-**Fases 4–6**: US2/US3/US4 en paralelo entre equipos una vez US1 alcanza checkpoint
-
----
-
-## Parallel Example: User Story 1
-
-```bash
-# Tras T010 (store), lanzar en paralelo:
-T014: todo-list-item.tsx
-T015: todo-list.tsx
-T016: task-form-modal.tsx (create)
-T017: todo-empty-state.tsx
-
-# Secuencial después:
-T018: todos-page.tsx
-T019: app/page.tsx
-T020: textos ES
+```text
+Paralelo: T007→T008 | T009→T010 | T014 | T015
+Secuencial: T012→T013 (store) tras T002 local-storage
 ```
 
----
+**Fase 3 US1** (tras T013):
 
-## Parallel Example: User Stories 2–4
-
-```bash
-# Con US1 en checkpoint, tres desarrolladores:
-Dev A: T021–T024 (US2 edit)
-Dev B: T025–T028 (US3 delete)
-Dev C: T029–T032 (US4 complete)
+```text
+Paralelo: (T017→T018) | (T019→T020) | (T021→T022)
+Secuencial: T023→T024→T025→T026
 ```
 
 ---
 
 ## Implementation Strategy
 
-### MVP First (User Story 1 Only)
+### MVP First (US1 + tests)
 
-1. Completar Fase 1 + Fase 2
-2. Completar Fase 3 (US1) hasta T020
-3. **VALIDAR** con quickstart sección P1
-4. Demo / entrega incremental
+1. Fase 1 + Fase 2 completa (todos los RED→GREEN)
+2. Fase 3 hasta T026
+3. `npm run test:run`
+4. quickstart P1
 
 ### Incremental Delivery
 
-| Incremento | Tareas    | Valor entregado                               |
-| ---------- | --------- | --------------------------------------------- |
-| MVP        | T001–T020 | Crear, listar, ordenar, colores, persistencia |
-| +Edit      | T021–T024 | Mantener lista actualizada                    |
-| +Delete    | T025–T028 | Limpiar tareas obsoletas                      |
-| +Complete  | T029–T032 | Seguimiento de progreso                       |
-| Polish     | T033–T037 | Producción lista                              |
+| Incremento | Tareas    | Incluye tests     |
+| ---------- | --------- | ----------------- |
+| MVP        | T001–T026 | T007–T022 + store |
+| +Edit      | T027–T031 | T027–T028         |
+| +Delete    | T032–T036 | T032–T033         |
+| +Complete  | T037–T040 | T037, T039        |
+| Polish     | T041–T045 | —                 |
+| Gate       | T046–T047 | Cobertura ADR-005 |
 
 ### Suggested MVP Scope
 
-**T001–T020** (37 tareas totales; MVP = 20 tareas)
+**T001–T026** (47 tareas totales; MVP = 26 tareas con TDD en dominio, store y US1)
 
 ---
 
 ## Task Summary
 
-| Phase        | Task IDs      | Count  |
-| ------------ | ------------- | ------ |
-| Setup        | T001–T004     | 4      |
-| Foundational | T005–T013     | 9      |
-| US1 (P1)     | T014–T020     | 7      |
-| US2 (P2)     | T021–T024     | 4      |
-| US3 (P3)     | T025–T028     | 4      |
-| US4 (P4)     | T029–T032     | 4      |
-| Polish       | T033–T037     | 5      |
-| **Total**    | **T001–T037** | **37** |
+| Phase        | Task IDs      | Count  | Tareas RED |
+| ------------ | ------------- | ------ | ---------- |
+| Setup        | T001–T004     | 4      | 0          |
+| Foundational | T005–T016     | 12     | 3          |
+| US1 (P1)     | T017–T026     | 10     | 3          |
+| US2 (P2)     | T027–T031     | 5      | 1          |
+| US3 (P3)     | T032–T036     | 5      | 1          |
+| US4 (P4)     | T037–T040     | 4      | 2          |
+| Polish       | T041–T045     | 5      | 0          |
+| Test Gate    | T046–T047     | 2      | 0          |
+| **Total**    | **T001–T047** | **47** | **10 RED** |
 
-### Tasks per User Story
+### Tasks per User Story (incl. TDD)
 
-| User Story | Implementation tasks |
-| ---------- | -------------------- |
-| US1        | 7 (T014–T020)        |
-| US2        | 4 (T021–T024)        |
-| US3        | 4 (T025–T028)        |
-| US4        | 4 (T029–T032)        |
+| User Story | RED | GREEN / integración |
+| ---------- | --- | ------------------- |
+| US1        | 3   | 7                   |
+| US2        | 1   | 4                   |
+| US3        | 1   | 4                   |
+| US4        | 2   | 2                   |
 
 ### Format Validation
 
 - [x] Todas las tareas usan `- [ ]`
-- [x] IDs secuenciales T001–T037
+- [x] IDs secuenciales T001–T047
 - [x] Etiquetas [USn] en fases de user story
-- [x] Marcador [P] solo en tareas paralelizables
-- [x] Cada descripción incluye ruta de archivo concreta
+- [x] Marcador [P] donde aplica
+- [x] Rutas de archivo en cada descripción
+- [x] Pares RED→GREEN explícitos para TDD
 
 ---
 
 ## Notes
 
-- El store incluye CRUD completo en Fase 2; las user stories exponen capacidades en UI de forma incremental.
-- `TaskFormModal` se entrega en modo `create` en US1; modo `edit` en US2.
-- Botones de acción en `TodoListItem` se añaden por story (edit US2, delete US3, toggle US4).
-- Commit sugerido tras cada checkpoint de fase.
+- El contrato UI (`contracts/ui-contracts.md`) describe el estado final con columna «Fase»; editar/eliminar/toggle se entregan en US2–US4.
+- Desempate misma prioridad: `createdAt` ascendente, luego `id` (spec, data-model, T009–T010).
+- `TaskFormModal`: create en US1 (T017–T018); edit en US2 (T027–T028).
+- US2 escenario 4 (editar tarea completada) se valida tras US4 (T040).
+- Tras cada par RED→GREEN, ejecutar `npm run test:run` antes de seguir.
+- Commit sugerido tras cada checkpoint o par RED→GREEN cerrado.

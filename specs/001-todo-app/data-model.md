@@ -33,6 +33,15 @@ type TodoStatus = "pendiente" | "completada";
 | `media` | 1         | ámbar      |
 | `baja`  | 2 (last)  | verde      |
 
+### Tie-break (same priority)
+
+Cuando dos o más tareas comparten `priority`, el orden secundario es:
+
+1. `createdAt` ascendente (ISO 8601; tarea más antigua primero, más reciente al final del grupo).
+2. Si `createdAt` es idéntico (caso extremo), desempate estable por `id` lexicográfico.
+
+Este orden **no se persiste**; se calcula en `sortTodosByPriority` al renderizar (ver `src/features/todos/lib/sort.ts`).
+
 ### Validation rules
 
 | Rule   | Constraint                                                     |
@@ -101,8 +110,8 @@ interface UpdateTodoInput {
 
 ## Error model (domain)
 
-| Code               | Condition                      | User-facing                                   |
-| ------------------ | ------------------------------ | --------------------------------------------- |
-| `VALIDATION_ERROR` | Invalid input on save          | Field-level message in modal                  |
-| `NOT_FOUND`        | Update/delete unknown id       | Silent no-op or toast (implementation choice) |
-| `STORAGE_ERROR`    | localStorage quota/unavailable | Message: no se pudo guardar                   |
+| Code               | Condition                      | User-facing                                                                        |
+| ------------------ | ------------------------------ | ---------------------------------------------------------------------------------- |
+| `VALIDATION_ERROR` | Invalid input on save          | Field-level message in modal                                                       |
+| `NOT_FOUND`        | Update/delete unknown id       | Silent no-op or toast (implementation choice)                                      |
+| `STORAGE_ERROR`    | localStorage quota/unavailable | Mensaje visible; modal de formulario abierta con datos conservados para reintentar |

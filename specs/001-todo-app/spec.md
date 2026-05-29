@@ -90,10 +90,10 @@ Como usuario, quiero marcar tareas como completadas y distinguirlas visualmente 
 ### Edge Cases
 
 - ¿Qué ocurre si el usuario introduce una fecha de vencimiento en el pasado? Se permite guardar la tarea; la fecha pasada se muestra tal cual (no se bloquea ni se corrige automáticamente).
-- ¿Qué ocurre si dos tareas tienen la misma prioridad? Se mantienen agrupadas bajo esa prioridad; dentro del grupo, el orden es el de creación (más reciente al final o al inicio de forma consistente).
+- ¿Qué ocurre si dos tareas tienen la misma prioridad? Se mantienen agrupadas bajo esa prioridad; dentro del grupo, el orden es por fecha de creación ascendente (la tarea creada primero aparece antes; la más reciente al final del grupo). Si dos tareas comparten el mismo `createdAt`, desempate estable por `id` lexicográfico.
 - ¿Qué ocurre si no hay tareas? El listado muestra un estado vacío claro invitando a crear la primera tarea.
-- ¿Qué ocurre si la descripción es muy larga? Se muestra completa o truncada con forma de ver el texto completo, sin perder datos al guardar.
-- ¿Qué ocurre si el almacenamiento local del navegador está lleno o no disponible? Se informa al usuario con un mensaje comprensible y la acción no se pierde silenciosamente.
+- ¿Qué ocurre si la descripción es muy larga? En el listado se trunca visualmente con elipsis; el texto completo permanece guardado y es accesible mediante el atributo `title` del ítem (tooltip al pasar el cursor o lectura por lector de pantalla).
+- ¿Qué ocurre si el almacenamiento local del navegador está lleno o no disponible? Se muestra un mensaje comprensible al usuario; la modal de creación/edición permanece abierta con los datos del formulario intactos para que el usuario pueda reintentar tras liberar espacio o corregir el bloqueo del navegador.
 - ¿Qué ocurre al eliminar la última tarea? El listado vuelve al estado vacío.
 - ¿Qué ocurre si el usuario cierra la modal de creación/edición con cambios sin guardar? Los cambios se descartan y la tarea permanece en su estado anterior.
 - ¿Qué ocurre si el usuario cancela la modal de eliminación? La tarea no se elimina y el listado permanece intacto.
