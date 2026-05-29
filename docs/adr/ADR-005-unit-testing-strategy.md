@@ -1,6 +1,6 @@
 # ADR-005: Estrategia de pruebas unitarias
 
-- Estado: Draft
+- Estado: Accepted
 - Fecha de creación: 2026-05-28
 - Última actualización: 2026-05-28
 - Decisores: Tech lead

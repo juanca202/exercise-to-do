@@ -1,6 +1,6 @@
 # ADR-006: Librería de componentes UI con Base UI
 
-- Estado: Draft
+- Estado: Accepted
 - Fecha de creación: 2026-05-28
 - Última actualización: 2026-05-28
 - Decisores: Tech lead
