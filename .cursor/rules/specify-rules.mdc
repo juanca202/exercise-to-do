@@ -4,5 +4,16 @@ alwaysApply: true
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan
+shell commands, and other important information, read the current plan at
+`specs/001-todo-app/plan.md` and related artifacts:
+
+- Spec: `specs/001-todo-app/spec.md`
+- Research: `specs/001-todo-app/research.md`
+- Data model: `specs/001-todo-app/data-model.md`
+- UI contracts: `specs/001-todo-app/contracts/ui-contracts.md`
+- Quickstart: `specs/001-todo-app/quickstart.md`
+
+**Stack**: Next.js 16, React 19, TypeScript, Zustand, Base UI, Tailwind v4, Vitest.
+**Feature module**: `src/features/todos/`
+**Storage**: localStorage key `todos:v1`
 <!-- SPECKIT END -->
