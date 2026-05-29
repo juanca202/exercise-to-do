@@ -32,10 +32,10 @@ Cada par RED→GREEN está en orden de ejecución. No marcar GREEN como hecha si
 
 **Purpose**: Estructura de carpetas y utilidades transversales mínimas
 
-- [ ] T001 Crear estructura de directorios de la feature en `src/features/todos/` (`components/`, `store/`, `lib/`, `testing/`) según plan.md
-- [ ] T002 [P] Implementar helper genérico de almacenamiento JSON en `src/lib/storage/local-storage.ts` (get/set/remove con manejo de errores)
-- [ ] T003 [P] Crear constante de clave `TODOS_STORAGE_KEY = 'todos:v1'` en `src/features/todos/lib/constants.ts`
-- [ ] T004 [P] Crear directorio `src/components/ui/` para wrappers Base UI reutilizables (Dialog, Button, Badge) si no existen
+- [x] T001 Crear estructura de directorios de la feature en `src/features/todos/` (`components/`, `store/`, `lib/`, `testing/`) según plan.md
+- [x] T002 [P] Implementar helper genérico de almacenamiento JSON en `src/lib/storage/local-storage.ts` (get/set/remove con manejo de errores)
+- [x] T003 [P] Crear constante de clave `TODOS_STORAGE_KEY = 'todos:v1'` en `src/features/todos/lib/constants.ts`
+- [x] T004 [P] Crear directorio `src/components/ui/` para wrappers Base UI reutilizables (Dialog, Button, Badge) si no existen
 
 ---
 
@@ -47,30 +47,30 @@ Cada par RED→GREEN está en orden de ejecución. No marcar GREEN como hecha si
 
 ### Tipos y utilidades de test
 
-- [ ] T005 [P] Definir tipos `Todo`, `TodoPriority`, `TodoStatus`, `CreateTodoInput`, `UpdateTodoInput`, `ValidationResult` en `src/features/todos/lib/types.ts`
-- [ ] T006 [P] Crear Object Mothers `aTodo()`, `aTodoInput()`, `buildTodo()` en `src/features/todos/testing/todo-mothers.ts`
+- [x] T005 [P] Definir tipos `Todo`, `TodoPriority`, `TodoStatus`, `CreateTodoInput`, `UpdateTodoInput`, `ValidationResult` en `src/features/todos/lib/types.ts`
+- [x] T006 [P] Crear Object Mothers `aTodo()`, `aTodoInput()`, `buildTodo()` en `src/features/todos/testing/todo-mothers.ts`
 
 ### validation.ts (TDD)
 
-- [ ] T007 [P] **RED** Escribir tests en `src/features/todos/lib/validation.test.ts`: VR-001–VR-006, rechazo descripción vacía/fecha inválida (FR-010, SC-006); ejecutar `npm run test:run` y confirmar fallo
-- [ ] T008 [P] **GREEN** Implementar `validateCreateInput` / `validateUpdateInput` en `src/features/todos/lib/validation.ts` hasta que T007 pase
+- [x] T007 [P] **RED** Escribir tests en `src/features/todos/lib/validation.test.ts`: VR-001–VR-006, rechazo descripción vacía/fecha inválida (FR-010, SC-006); ejecutar `npm run test:run` y confirmar fallo
+- [x] T008 [P] **GREEN** Implementar `validateCreateInput` / `validateUpdateInput` en `src/features/todos/lib/validation.ts` hasta que T007 pase
 
 ### sort.ts (TDD)
 
-- [ ] T009 [P] **RED** Escribir tests en `src/features/todos/lib/sort.test.ts`: orden alta→media→baja (FR-004, SC-002); desempate `createdAt` ascendente; desempate por `id` si empatan timestamps
-- [ ] T010 [P] **GREEN** Implementar `sortTodosByPriority` en `src/features/todos/lib/sort.ts` hasta que T009 pase
+- [x] T009 [P] **RED** Escribir tests en `src/features/todos/lib/sort.test.ts`: orden alta→media→baja (FR-004, SC-002); desempate `createdAt` ascendente; desempate por `id` si empatan timestamps
+- [x] T010 [P] **GREEN** Implementar `sortTodosByPriority` en `src/features/todos/lib/sort.ts` hasta que T009 pase
 
 ### Estilos y store (TDD)
 
-- [ ] T011 [P] **GREEN** Definir mapa semáforo en `src/features/todos/lib/priority-styles.ts` (alta=rojo, media=ámbar, baja=verde) — sin test unitario; cubierto en tests de componente (US1)
-- [ ] T012 **RED** Escribir tests en `src/features/todos/store/todo-store.test.ts`: hydrate, `createTodo`, `updateTodo`, `deleteTodo`, `toggleStatus`, persistencia mock `localStorage` (FR-009); confirmar fallo
-- [ ] T013 **GREEN** Implementar store Zustand en `src/features/todos/store/todo-store.ts` hasta que T012 pase
+- [x] T011 [P] **GREEN** Definir mapa semáforo en `src/features/todos/lib/priority-styles.ts` (alta=rojo, media=ámbar, baja=verde) — sin test unitario; cubierto en tests de componente (US1)
+- [x] T012 **RED** Escribir tests en `src/features/todos/store/todo-store.test.ts`: hydrate, `createTodo`, `updateTodo`, `deleteTodo`, `toggleStatus`, persistencia mock `localStorage` (FR-009); confirmar fallo
+- [x] T013 **GREEN** Implementar store Zustand en `src/features/todos/store/todo-store.ts` hasta que T012 pase
 
 ### UI compartida y export
 
-- [ ] T014 [P] **GREEN** Implementar wrapper `Dialog` con Base UI en `src/components/ui/dialog.tsx` (focus trap, Escape, `open`/`onOpenChange`)
-- [ ] T015 [P] **GREEN** Implementar wrappers `Button` y `Badge` en `src/components/ui/button.tsx` y `src/components/ui/badge.tsx` según DESIGN.md
-- [ ] T016 **GREEN** Exportar API pública en `src/features/todos/index.ts`
+- [x] T014 [P] **GREEN** Implementar wrapper `Dialog` con Base UI en `src/components/ui/dialog.tsx` (focus trap, Escape, `open`/`onOpenChange`)
+- [x] T015 [P] **GREEN** Implementar wrappers `Button` y `Badge` en `src/components/ui/button.tsx` y `src/components/ui/badge.tsx` según DESIGN.md
+- [x] T016 **GREEN** Exportar API pública en `src/features/todos/index.ts`
 
 **Checkpoint**: `npm run test:run` verde en `lib/` y `store/`; wrappers UI listos
 
@@ -84,22 +84,22 @@ Cada par RED→GREEN está en orden de ejecución. No marcar GREEN como hecha si
 
 ### TaskFormModal — create (TDD)
 
-- [ ] T017 [P] [US1] **RED** Escribir tests en `src/features/todos/components/task-form-modal.test.tsx` (modo `create`): guardar válido, rechazo campos vacíos (FR-010), cancelar sin crear (FR-015); confirmar fallo
-- [ ] T018 [P] [US1] **GREEN** Implementar `TaskFormModal` modo `create` en `src/features/todos/components/task-form-modal.tsx` hasta que T017 pase (FR-013)
+- [x] T017 [P] [US1] **RED** Escribir tests en `src/features/todos/components/task-form-modal.test.tsx` (modo `create`): guardar válido, rechazo campos vacíos (FR-010), cancelar sin crear (FR-015); confirmar fallo
+- [x] T018 [P] [US1] **GREEN** Implementar `TaskFormModal` modo `create` en `src/features/todos/components/task-form-modal.tsx` hasta que T017 pase (FR-013)
 
 ### Listado (TDD)
 
-- [ ] T019 [P] [US1] **RED** Escribir tests en `src/features/todos/components/todo-list-item.test.tsx`: muestra descripción/fecha, badge prioridad por color (FR-014, SC-007), estado `pendiente` por defecto; confirmar fallo
-- [ ] T020 [P] [US1] **GREEN** Implementar `TodoListItem` en `src/features/todos/components/todo-list-item.tsx` (sin botones editar/eliminar/toggle) hasta que T019 pase
-- [ ] T021 [P] [US1] **RED** Escribir tests en `src/features/todos/components/todo-list.test.tsx`: lista ordenada vía `getSortedTodos()`; confirmar fallo
-- [ ] T022 [P] [US1] **GREEN** Implementar `TodoList` en `src/features/todos/components/todo-list.tsx` hasta que T021 pase
+- [x] T019 [P] [US1] **RED** Escribir tests en `src/features/todos/components/todo-list-item.test.tsx`: muestra descripción/fecha, badge prioridad por color (FR-014, SC-007), estado `pendiente` por defecto; confirmar fallo
+- [x] T020 [P] [US1] **GREEN** Implementar `TodoListItem` en `src/features/todos/components/todo-list-item.tsx` (sin botones editar/eliminar/toggle) hasta que T019 pase
+- [x] T021 [P] [US1] **RED** Escribir tests en `src/features/todos/components/todo-list.test.tsx`: lista ordenada vía `getSortedTodos()`; confirmar fallo
+- [x] T022 [P] [US1] **GREEN** Implementar `TodoList` en `src/features/todos/components/todo-list.tsx` hasta que T021 pase
 
 ### Integración US1
 
-- [ ] T023 [US1] **GREEN** Implementar `TodoEmptyState` en `src/features/todos/components/todo-empty-state.tsx` (FR-012)
-- [ ] T024 [US1] **GREEN** Implementar `TodosPage` en `src/features/todos/components/todos-page.tsx` (hydrate, listado/empty, modal crear)
-- [ ] T025 [US1] **GREEN** Conectar `src/app/page.tsx` con `TodosPage`
-- [ ] T026 [US1] **GREEN** Textos UI en español y mensajes de validación en `task-form-modal.tsx`
+- [x] T023 [US1] **GREEN** Implementar `TodoEmptyState` en `src/features/todos/components/todo-empty-state.tsx` (FR-012)
+- [x] T024 [US1] **GREEN** Implementar `TodosPage` en `src/features/todos/components/todos-page.tsx` (hydrate, listado/empty, modal crear)
+- [x] T025 [US1] **GREEN** Conectar `src/app/page.tsx` con `TodosPage`
+- [x] T026 [US1] **GREEN** Textos UI en español y mensajes de validación en `task-form-modal.tsx`
 
 **Checkpoint**: MVP — `npm run test:run` verde incluyendo tests US1; validar quickstart P1
 
@@ -113,14 +113,14 @@ Cada par RED→GREEN está en orden de ejecución. No marcar GREEN como hecha si
 
 ### TaskFormModal — edit (TDD)
 
-- [ ] T027 [US2] **RED** Ampliar `src/features/todos/components/task-form-modal.test.tsx`: modo `edit` precarga datos, `updateTodo`, validación, cancelar sin cambios (FR-005, FR-015); confirmar fallo en casos nuevos
-- [ ] T028 [US2] **GREEN** Extender `TaskFormModal` modo `edit` en `task-form-modal.tsx` hasta que T027 pase
+- [x] T027 [US2] **RED** Ampliar `src/features/todos/components/task-form-modal.test.tsx`: modo `edit` precarga datos, `updateTodo`, validación, cancelar sin cambios (FR-005, FR-015); confirmar fallo en casos nuevos
+- [x] T028 [US2] **GREEN** Extender `TaskFormModal` modo `edit` en `task-form-modal.tsx` hasta que T027 pase
 
 ### UI edición
 
-- [ ] T029 [US2] **GREEN** Añadir botón Editar y `onEdit` en `todo-list-item.tsx`
-- [ ] T030 [US2] **GREEN** Integrar modal edición en `todos-page.tsx`
-- [ ] T031 [US2] **GREEN** Ampliar `todo-list.test.tsx`: reordenación tras cambio de prioridad
+- [x] T029 [US2] **GREEN** Añadir botón Editar y `onEdit` en `todo-list-item.tsx`
+- [x] T030 [US2] **GREEN** Integrar modal edición en `todos-page.tsx`
+- [x] T031 [US2] **GREEN** Ampliar `todo-list.test.tsx`: reordenación tras cambio de prioridad
 
 **Checkpoint**: Tests modal + listado verdes; quickstart P2
 
@@ -134,14 +134,14 @@ Cada par RED→GREEN está en orden de ejecución. No marcar GREEN como hecha si
 
 ### DeleteConfirmModal (TDD)
 
-- [ ] T032 [P] [US3] **RED** Escribir tests en `src/features/todos/components/delete-confirm-modal.test.tsx`: confirmar elimina, cancelar no elimina (FR-006); confirmar fallo
-- [ ] T033 [P] [US3] **GREEN** Implementar `DeleteConfirmModal` en `delete-confirm-modal.tsx` hasta que T032 pase
+- [x] T032 [P] [US3] **RED** Escribir tests en `src/features/todos/components/delete-confirm-modal.test.tsx`: confirmar elimina, cancelar no elimina (FR-006); confirmar fallo
+- [x] T033 [P] [US3] **GREEN** Implementar `DeleteConfirmModal` en `delete-confirm-modal.tsx` hasta que T032 pase
 
 ### UI eliminación
 
-- [ ] T034 [US3] **GREEN** Añadir botón Eliminar y `onDelete` en `todo-list-item.tsx`
-- [ ] T035 [US3] **GREEN** Integrar modal eliminación en `todos-page.tsx`
-- [ ] T036 [US3] **GREEN** Transición a `TodoEmptyState` al eliminar última tarea
+- [x] T034 [US3] **GREEN** Añadir botón Eliminar y `onDelete` en `todo-list-item.tsx`
+- [x] T035 [US3] **GREEN** Integrar modal eliminación en `todos-page.tsx`
+- [x] T036 [US3] **GREEN** Transición a `TodoEmptyState` al eliminar última tarea
 
 **Checkpoint**: quickstart P3; tests delete modal verdes
 
@@ -155,10 +155,10 @@ Cada par RED→GREEN está en orden de ejecución. No marcar GREEN como hecha si
 
 ### Toggle y estilos (TDD)
 
-- [ ] T037 [US4] **RED** Ampliar `todo-list-item.test.tsx`: toggle completada/pendiente, estilos tachado/opacidad con badge prioridad (FR-007, FR-008, SC-004); confirmar fallo
-- [ ] T038 [US4] **GREEN** Implementar checkbox/toggle y estilos en `todo-list-item.tsx` hasta que T037 pase
-- [ ] T039 [US4] **RED** Ampliar `todo-store.test.ts`: persistencia de `status` tras `toggleStatus`
-- [ ] T040 [US4] **GREEN** Conectar `onToggleStatus` en `todo-list.tsx` y `todos-page.tsx`; verificar store si hace falta ajuste
+- [x] T037 [US4] **RED** Ampliar `todo-list-item.test.tsx`: toggle completada/pendiente, estilos tachado/opacidad con badge prioridad (FR-007, FR-008, SC-004); confirmar fallo
+- [x] T038 [US4] **GREEN** Implementar checkbox/toggle y estilos en `todo-list-item.tsx` hasta que T037 pase
+- [x] T039 [US4] **RED** Ampliar `todo-store.test.ts`: persistencia de `status` tras `toggleStatus`
+- [x] T040 [US4] **GREEN** Conectar `onToggleStatus` en `todo-list.tsx` y `todos-page.tsx`; verificar store si hace falta ajuste
 
 **Checkpoint**: US2 escenario 4 (editar completada) verificable; quickstart P4
 
@@ -168,11 +168,11 @@ Cada par RED→GREEN está en orden de ejecución. No marcar GREEN como hecha si
 
 **Purpose**: Robustez, a11y, validación manual
 
-- [ ] T041 [P] **GREEN** Manejar error `localStorage` en `todo-store.ts`: mensaje visible al usuario; no cerrar modal de formulario; conservar valores del formulario para reintentar (ampliar `todo-store.test.ts` si aplica)
-- [ ] T042 [P] **GREEN** Atributos ARIA en `task-form-modal.tsx` y `delete-confirm-modal.tsx`
-- [ ] T043 **GREEN** Truncar descripción larga en listado (elipsis) con atributo `title` = texto completo en `todo-list-item.tsx` (sin pérdida de datos al guardar)
-- [ ] T044 Ejecutar checklist manual `specs/001-todo-app/quickstart.md`
-- [ ] T045 Ejecutar `npm run lint` y `npm run build`
+- [x] T041 [P] **GREEN** Manejar error `localStorage` en `todo-store.ts`: mensaje visible al usuario; no cerrar modal de formulario; conservar valores del formulario para reintentar (ampliar `todo-store.test.ts` si aplica)
+- [x] T042 [P] **GREEN** Atributos ARIA en `task-form-modal.tsx` y `delete-confirm-modal.tsx`
+- [x] T043 **GREEN** Truncar descripción larga en listado (elipsis) con atributo `title` = texto completo en `todo-list-item.tsx` (sin pérdida de datos al guardar)
+- [x] T044 Ejecutar checklist manual `specs/001-todo-app/quickstart.md`
+- [x] T045 Ejecutar `npm run lint` y `npm run build`
 
 ---
 
@@ -180,8 +180,8 @@ Cada par RED→GREEN está en orden de ejecución. No marcar GREEN como hecha si
 
 **Purpose**: Cierre de calidad antes de merge
 
-- [ ] T046 Configurar umbral cobertura de ramas (≥80 %) en `vitest.config.ts` para `src/features/todos/lib/**` y `src/features/todos/store/**` (y componentes con lógica si el repo lo permite)
-- [ ] T047 Verificar `npm run test:run` en verde y cobertura cumple ADR-005; documentar excepciones en PR si algún archivo queda fuera
+- [x] T046 Configurar umbral cobertura de ramas (≥80 %) en `vitest.config.ts` para `src/features/todos/lib/**` y `src/features/todos/store/**` (y componentes con lógica si el repo lo permite)
+- [x] T047 Verificar `npm run test:run` en verde y cobertura cumple ADR-005; documentar excepciones en PR si algún archivo queda fuera
 
 **Checkpoint**: Feature lista para merge desde perspectiva de pruebas
 
