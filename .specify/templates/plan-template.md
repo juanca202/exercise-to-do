@@ -40,7 +40,19 @@
 
 _GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-[Gates determined based on constitution file]
+Verify compliance with `.specify/memory/constitution.md` and accepted ADRs in
+`docs/adr/`. Minimum gates:
+
+| Gate                           | Source                     | Status | Notes                                |
+| ------------------------------ | -------------------------- | ------ | ------------------------------------ |
+| Spec-driven artifacts complete | Constitution I             | ☐      | spec.md exists before plan           |
+| Feature-based layout           | Constitution II / ADR-004  | ☐      | Code under `src/features/<feature>/` |
+| TDD plan with RED→GREEN pairs  | Constitution III / ADR-005 | ☐      | tasks.md includes test tasks         |
+| ADR stack compliance           | Constitution IV            | ☐      | No unapproved framework swaps        |
+| Incremental MVP scope          | Constitution V             | ☐      | P1 story independently testable      |
+
+Mark each gate ✅ Pass / ❌ Fail / ⚠ Waived (with justification in Complexity
+Tracking below). Re-check after Phase 1 design.
 
 ## Project Structure
 

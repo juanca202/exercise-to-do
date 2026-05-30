@@ -8,7 +8,7 @@ description: "Task list template for feature implementation"
 
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: Per project constitution (Principle III) and [ADR-005](../../docs/adr/ADR-005-unit-testing-strategy.md), TDD is **MANDATORY** for business logic: co-located `*.test.ts(x)`, RED→GREEN pairs, Object Mothers, ≥80% branch coverage in `lib/`, `store/`, and components with business logic. Include explicit RED and GREEN tasks in generated `tasks.md`.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -79,9 +79,9 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 1 (TDD — REQUIRED per constitution) ⚠️
 
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+> **NOTE: Write these tests FIRST, ensure they FAIL before implementation (RED→GREEN)**
 
 - [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test\_[name].py
 - [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test\_[name].py
@@ -105,7 +105,9 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 2 (TDD — REQUIRED per constitution) ⚠️
+
+> **NOTE: Write these tests FIRST, ensure they FAIL before implementation (RED→GREEN)**
 
 - [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test\_[name].py
 - [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test\_[name].py
@@ -127,7 +129,9 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 3 (TDD — REQUIRED per constitution) ⚠️
+
+> **NOTE: Write these tests FIRST, ensure they FAIL before implementation (RED→GREEN)**
 
 - [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test\_[name].py
 - [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test\_[name].py
