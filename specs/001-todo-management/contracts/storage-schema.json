@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "todos:v1",
+  "title": "TodosLocalStorageV1",
+  "description": "Esquema de persistencia local para la feature todos (FR-011)",
+  "type": "object",
+  "required": ["version", "tasks"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "tasks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/task" }
+    }
+  },
+  "$defs": {
+    "priority": {
+      "type": "string",
+      "enum": ["alta", "media", "baja"]
+    },
+    "taskStatus": {
+      "type": "string",
+      "enum": ["pendiente", "completada"]
+    },
+    "task": {
+      "type": "object",
+      "required": [
+        "id",
+        "description",
+        "dueDate",
+        "priority",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dueDate": {
+          "type": ["string", "null"],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "priority": { "$ref": "#/$defs/priority" },
+        "status": { "$ref": "#/$defs/taskStatus" },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

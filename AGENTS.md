@@ -17,5 +17,5 @@ Esta versión introduce cambios incompatibles: las APIs, las convenciones y la e
 ## Uso obligatorio de agentes especializados
 
 - Implementación HTML/UI: usar `/ui-specialist.md`.
-- Testing: usar `/quality-specialist.md`.
+- Testing (TDD obligatorio en `/speckit-implement` y tareas de `tasks.md`): usar `/quality-specialist.md`; tests antes que código de producción (red-green-refactor).
 - Documentación: usar `/docs-specialist.md`.

@@ -1,0 +1,35 @@
+---
+alwaysApply: true
+---
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan:
+
+**Active feature**: `001-todo-management`  
+**Plan**: `specs/001-todo-management/plan.md`  
+**Spec**: `specs/001-todo-management/spec.md`  
+**Research**: `specs/001-todo-management/research.md`  
+**Data model**: `specs/001-todo-management/data-model.md`  
+**Quickstart**: `specs/001-todo-management/quickstart.md`
+
+## Stack
+
+- Next.js 16 App Router (`src/app/`), React 19, TypeScript 5
+- Zustand (store en `src/features/todos/store/`)
+- `@base-ui/react` para Dialog, Field, Input, Select, Checkbox
+- Tailwind CSS 4 + `DESIGN.md`
+- Vitest + Testing Library (TDD obligatorio)
+
+## Feature layout
+
+- Dominio: `src/features/todos/` (components, store, lib, types, testing)
+- Ruta: `src/app/page.tsx` compone `TodoPage`
+- Persistencia: `localStorage` clave `todos:v1`
+
+## Quality gates
+
+```bash
+npm run lint && npm run test:run && npm run build
+```
+<!-- SPECKIT END -->
