@@ -1,193 +1,166 @@
-<design-context>
 ---
-version: alpha
-name: Spotify
-description: "Near-black canvas (#121212) with Spotify Green (#1DB954) as the brand pulse — play controls, progress bars, followed states. The signature move: dynamic color extraction from album art bleeds into the surrounding UI, making every listening session feel unique. Typography: Circular (Lineto)."
-
+name: Precision Focus
 colors:
-  primary: "#1DB954"
-  on-primary: "#000000"
-  primary-hover: "#1ED760"
-  ink: "#FFFFFF"
-  ink-muted: "#A7A7A7"
-  canvas: "#121212"
-  surface-1: "#1A1A1A"
-  surface-2: "#282828"
-  surface-3: "#333333"
-  border: "#3E3E3E"
-  dynamic-bg: "extracted from album art"
-  progress-fill: "#1DB954"
-  error: "#F15E6C"
-  premium-gold: "#D4AF37"
-
+  surface: '#f7f9fb'
+  surface-dim: '#d8dadc'
+  surface-bright: '#f7f9fb'
+  surface-container-lowest: '#ffffff'
+  surface-container-low: '#f2f4f6'
+  surface-container: '#eceef0'
+  surface-container-high: '#e6e8ea'
+  surface-container-highest: '#e0e3e5'
+  on-surface: '#191c1e'
+  on-surface-variant: '#45464e'
+  inverse-surface: '#2d3133'
+  inverse-on-surface: '#eff1f3'
+  outline: '#75777e'
+  outline-variant: '#c6c6ce'
+  surface-tint: '#525e7f'
+  primary: '#182442'
+  on-primary: '#ffffff'
+  primary-container: '#2e3a59'
+  on-primary-container: '#98a4c9'
+  inverse-primary: '#bac6ec'
+  secondary: '#006c4b'
+  on-secondary: '#ffffff'
+  secondary-container: '#64f9bc'
+  on-secondary-container: '#00714e'
+  tertiary: '#16263a'
+  on-tertiary: '#ffffff'
+  tertiary-container: '#2c3c51'
+  on-tertiary-container: '#96a6bf'
+  error: '#ba1a1a'
+  on-error: '#ffffff'
+  error-container: '#ffdad6'
+  on-error-container: '#93000a'
+  primary-fixed: '#dae2ff'
+  primary-fixed-dim: '#bac6ec'
+  on-primary-fixed: '#0d1a38'
+  on-primary-fixed-variant: '#3a4666'
+  secondary-fixed: '#68fcbf'
+  secondary-fixed-dim: '#45dfa4'
+  on-secondary-fixed: '#002114'
+  on-secondary-fixed-variant: '#005137'
+  tertiary-fixed: '#d3e4fe'
+  tertiary-fixed-dim: '#b7c8e1'
+  on-tertiary-fixed: '#0b1c30'
+  on-tertiary-fixed-variant: '#38485d'
+  background: '#f7f9fb'
+  on-background: '#191c1e'
+  surface-variant: '#e0e3e5'
 typography:
-  display:
-    fontFamily: "Circular, CircularSp, Helvetica Neue, Arial, sans-serif"
-    fontSize: 56px
-    fontWeight: 700
-    lineHeight: 1.05
-    letterSpacing: -0.03em
-  body:
-    fontFamily: "Circular, CircularSp, Helvetica Neue, Arial, sans-serif"
+  display-time:
+    fontFamily: Inter
+    fontSize: 48px
+    fontWeight: '700'
+    lineHeight: '1.1'
+    letterSpacing: -0.02em
+  headline-lg:
+    fontFamily: Inter
+    fontSize: 32px
+    fontWeight: '600'
+    lineHeight: 40px
+  headline-md:
+    fontFamily: Inter
+    fontSize: 24px
+    fontWeight: '600'
+    lineHeight: 32px
+  body-lg:
+    fontFamily: Inter
+    fontSize: 16px
+    fontWeight: '400'
+    lineHeight: 24px
+  body-md:
+    fontFamily: Inter
     fontSize: 14px
-    fontWeight: 400
-    lineHeight: 1.6
-    letterSpacing: -0.01em
-
+    fontWeight: '400'
+    lineHeight: 20px
+  label-mono:
+    fontFamily: JetBrains Mono
+    fontSize: 12px
+    fontWeight: '500'
+    lineHeight: 16px
+    letterSpacing: 0.05em
+  headline-lg-mobile:
+    fontFamily: Inter
+    fontSize: 24px
+    fontWeight: '600'
+    lineHeight: 32px
+rounded:
+  sm: 0.125rem
+  DEFAULT: 0.25rem
+  md: 0.375rem
+  lg: 0.5rem
+  xl: 0.75rem
+  full: 9999px
 spacing:
-  base: 8px
-  scale: [4, 8, 12, 16, 24, 32, 48, 64, 96, 128]
-
-radius:
-  sm: 4px
-  md: 8px
-  lg: 12px
-  pill: 9999px
-
-shadows:
-  card: "0 2px 8px rgba(0,0,0,0.4)"
-  elevated: "0 8px 32px rgba(0,0,0,0.6)"
-  now-playing: "0 16px 48px rgba(0,0,0,0.8)"
-
-motion:
-  duration-fast: 100ms
-  duration-base: 200ms
-  easing: cubic-bezier(0.4, 0, 0.2, 1)
+  unit: 4px
+  gutter: 24px
+  margin-mobile: 16px
+  margin-desktop: 40px
+  container-max-width: 1280px
 ---
 
-## Rationale
+## Brand & Style
+The design system is engineered for deep work and high-output productivity. The brand personality is disciplined, unobtrusive, and systematic. It aims to evoke a sense of "flow state" by removing visual clutter and prioritizing task-critical information. 
 
-**Dynamic color extraction as personalization signal** — Spotify's most distinctive technical-design decision is pulling the dominant color from the currently playing album art and using it to tint the Now Playing view background and, on mobile, the player chrome. This means the UI literally shifts color based on what you're listening to — a Kendrick Lamar album produces a different ambient color environment than a Taylor Swift album. It transforms a static dark interface into something that feels alive and personal to this moment's listening.
+The aesthetic follows a **Modern Minimalist** approach with a **Functional/SaaS** core. It utilizes heavy whitespace to reduce cognitive load, high-quality typography for temporal data legibility, and a card-based architecture to organize complex project hierarchies. The emotional response should be one of professional reliability and calm efficiency, ensuring that the tool never competes with the user's work for attention.
 
-**Green for energy, not for decoration** — Spotify Green (#1DB954, brightening to #1ED760 on hover) is placed exclusively on active states and forward motion: the play button, the progress bar fill, the "Follow" button toggle, and Premium upgrade CTAs. It functions as a "go / active / live" signal across the entire interface. Putting green on passive elements — section headers, card backgrounds, text — would destroy this signal clarity.
+## Colors
+This design system utilizes a focused palette designed to guide the eye toward action and status.
 
-**Circular as warmth in darkness** — The choice of Lineto's Circular typeface (with its circular letter forms and friendly geometry) is intentional contrast to the dark environment. Most dark-theme products reach for sharp, technical, or condensed type. Circular is round, open, and warm — it keeps Spotify from feeling cold or clinical despite the near-black surfaces. It's the same principle that makes Spotify playlists feel curated by a human, not generated by an algorithm.
+- **Primary (Deep Indigo):** Used for navigation, primary buttons, and headings. It provides a grounded, professional foundation.
+- **Secondary (Mint Green):** Reserved exclusively for "Active" states, running timers, and positive progress indicators. It provides a clear, non-aggressive signal of life.
+- **Tertiary (Slate):** Used for secondary text, icons, and metadata to maintain a clear hierarchy without the harshness of pure black.
+- **Neutral (Soft Gray/White):** A multi-layered background system using `#F8FAFC` for the base and white for elevated cards to create subtle depth.
 
-**Dual density modes for dual jobs** — The product serves two fundamentally different browsing contexts: discovery (what should I listen to?) and queue management (what's playing next?). Discovery uses a large-card grid — artwork at 160×160px+, visible genre and artist context, social proof from play counts. Queue management uses a compact list view — 48px row height, album art thumbnail at 40px, title + artist inline. The system switches fluidly between these modes, and understanding when to show which is core to the product's UX.
+## Typography
+The typography system prioritizes tabular precision and hierarchy. **Inter** is the workhorse for the interface, chosen for its exceptional legibility in small sizes and its neutral, professional character.
 
-## 1. Visual Theme & Atmosphere
-Spotify lives in near-dark (#121212, not quite black to avoid harsh OLED contrast) — a deliberate choice to center music artwork as the primary visual element. The product is built around the premise that album art is design: when a great cover (like a Miles Davis record or a Radiohead album sleeve) fills a 600×600px square on a dark background, the listening environment becomes an aesthetic experience.
+For numerical data, durations, and timestamps, a monospaced font (**JetBrains Mono**) is introduced in label roles to ensure that numbers align perfectly in lists and reports, preventing "jumping" text during active timer counts. 
 
-The platform's three key surfaces are distinct in visual weight:
-- The **library sidebar** and navigation: dark, recessive, structural
-- The **main content area**: grid-based discovery with artwork as the focal point
-- The **Now Playing bar** (bottom on desktop, full-screen on mobile): the most alive part of the UI, where dynamic color extraction makes every session visually unique
+- **Display Time:** Large, bold Inter for the primary active timer.
+- **Headlines:** Semi-bold for clear section demarcation.
+- **Labels:** Monospaced for all duration-based data to maintain alignment in dense tables.
 
-## 2. Color System
-**The base palette** is deliberately minimal — four near-black ramps let artwork stand out:
-- Canvas: #121212 — the base layer, warm near-black
-- Surface 1: #1A1A1A — sidebar, player bars
-- Surface 2: #282828 — cards, hover backgrounds, playlist rows
-- Surface 3: #333333 — input fields, secondary hover states
-- Border: #3E3E3E — structural dividers
+## Layout & Spacing
+The layout uses a **Fixed Grid** system for desktop to ensure the productivity dashboard remains organized and predictable, transitioning to a **Fluid Grid** for mobile.
 
-**Spotify Green**:
-- Default: #1DB954 — play button, progress fill, follow active, premium CTA
-- Hover: #1ED760 — brighter variant on interactive hover
-- On green: #000000 — the play button icon is always black on the green circle
+- **Desktop:** 12-column grid with a 24px gutter. Content is housed in a 1280px max-width container.
+- **Sidebar:** A fixed 280px navigation rail on the left.
+- **Spacing Rhythm:** Based on a 4px baseline. Components use 8px (small), 16px (medium), and 24px (large) increments for internal padding.
+- **Reflow:** On tablet (768px), the sidebar collapses into a hamburger menu or bottom bar, and the 12-column grid collapses to 6 columns.
 
-**Text**:
-- Primary: #FFFFFF — track names, playlist titles, active nav
-- Secondary: #A7A7A7 — artist names, album years, track counts, inactive states
+## Elevation & Depth
+This design system uses **Tonal Layers** combined with **Ambient Shadows** to create a structured hierarchy without visual noise.
 
-**Dynamic color (Now Playing)**:
-- The dominant vibrant color extracted from the current album art is used as a gradient source for the player background — typically a saturated hue that transitions to near-black at the bottom
-- Implementation: `canvas` → dominant-extracted-color blended at ~60% opacity over canvas
+- **Level 0 (Base):** The `#F8FAFC` background.
+- **Level 1 (Cards):** White surfaces with a subtle 1px border (`#E2E8F0`) and a soft, highly diffused shadow (Offset: 0, 4px; Blur: 12px; Opacity: 4% Black).
+- **Level 2 (Active/Hover):** When a card or timer is active, the shadow deepens (Opacity: 8%) and a 2px Mint Green left-border is applied to indicate focus.
+- **Modals:** High-contrast elevation with a backdrop blur (8px) to isolate the user's task.
 
-## 3. Typography
-Circular (Lineto) is Spotify's brand typeface since 2015 — a geometric sans with notably circular apertures in letters like 'a', 'e', and 'c'. It reads as warm, accessible, and contemporary. On platforms where Circular isn't available, CircularSp (a subsetting of the original) is used, with Helvetica Neue as the system fallback.
+## Shapes
+A **Soft** shape language is employed to balance the professional indigo tones. 
 
-Typographic scale:
-- **Display** (hero headers, playlist names at scale): 32–56px, weight 700, −0.03em tracking
-- **Title** (card labels, section headers): 16–24px, weight 700
-- **Body** (metadata, descriptions): 14px, weight 400
-- **Caption** (play count, duration, secondary labels): 12px, weight 400, #A7A7A7
+- **Standard Elements:** Buttons, input fields, and small cards use a 0.25rem (4px) radius to maintain a crisp, efficient look.
+- **Containers:** Large project cards and dashboard widgets use a 0.5rem (8px) radius.
+- **Status Pills:** Fully rounded (pill-shaped) to distinguish them from interactive buttons.
 
-Spotify uses tight line-heights (1.2–1.4) on multi-line text to maintain density — the product is information-rich and whitespace is earned rather than assumed.
+## Components
+### Timer Buttons
+Primary action buttons for "Start" use the Primary Indigo. When active, the button transforms into a "Stop" action using a subtle coral/red tint, while the surrounding card container gains a Mint Green pulse or steady border.
 
-## 4. Components & Patterns
-**Album/playlist card (the atom)**:
-- Square artwork fill (aspect ratio 1:1, 100% width of column)
-- Title below: 14px bold white
-- Subtitle: 12px #A7A7A7 (artist name, playlist description first line)
-- Card background: #282828 on hover
-- Play button (green circle, black triangle icon) appears centered on artwork on hover
+### Activity Charts
+Bar and line charts should use the Primary Indigo for historical data and Mint Green for the current day's progress. Use thin 1px grid lines in `#F1F5F9`.
 
-**Track list row**:
-- 48px height
-- 40×40px album thumbnail left
-- Track name + artist name stacked in center column
-- Duration right-aligned
-- "..." overflow menu on hover
-- Active/playing row highlights track name in Spotify Green
+### Project Cards
+Cards must include:
+- A title in `body-lg` (Semi-bold).
+- A duration label in `label-mono`.
+- A subtle progress bar at the bottom of the card using the Secondary Mint Green.
 
-**Now Playing bar (desktop bottom)**:
-- Three-column layout: track info left, playback controls center, volume/queue right
-- Track info: 40×40px art + title + artist
-- Controls: shuffle → prev → play/pause (green) → next → repeat
-- Progress bar: thin line with green fill and a small white scrubber dot
-- Volume: thin slider with green fill
+### Input Fields
+Clean, outlined inputs with a 1px `#CBD5E1` border. On focus, the border shifts to Primary Indigo with a 2px soft glow. Labels should always be visible above the field in `label-mono` at 50% opacity.
 
-**Full-screen player (mobile)**:
-- Album art fills ~60% of viewport height
-- Dynamic color gradient background extracted from art
-- Swipe gestures: up for queue, down to minimize, left/right for skip
-- Heart/save button, shuffle, repeat visible
-
-**Search grid**:
-- Genre cards use bold color fills (not album art) — each genre has a designated brand color (Hip-Hop: orange, Pop: pink, Rock: red, etc.)
-- 2-column grid on mobile, 3–4 columns on tablet, up to 6 on wide desktop
-
-**Playlist header**:
-- Large artwork (240×240px on desktop), playlist title at display scale
-- Description, creator name, follower count, total duration
-- Play (green) and shuffle buttons prominent
-- Follow button (outline → green fill toggle)
-
-## 5. Spacing & Layout
-Desktop layout: 240px left sidebar (library, navigation), variable right panel (queue, lyrics — 280–320px), center content area fills remaining space.
-
-Content grid: 8-column CSS grid in the main area, with card min-width of ~160px. Column count adapts from 2 (narrow) to 8 (wide). The grid uses a 16–24px gap.
-
-The bottom Now Playing bar is fixed at 90px height on desktop. The sidebar and main content must account for this reserved space.
-
-Mobile: full-screen with bottom navigation (Home, Search, Library, Premium). The collapsed Now Playing bar sits just above the bottom nav at 64px height.
-
-## 6. Motion & Interaction
-**Play/pause toggle**: instantaneous state change on the button icon, green fill pulses at 100ms for tap feedback on mobile.
-
-**Album art transition**: when the track changes, the Now Playing artwork cross-fades over 300ms. The dynamic background color transition is slower — 600ms ease — to prevent jarring flashes.
-
-**Card hover**: artwork scales to 104%, play button fades in at center, over 150ms. The surrounding card background shifts to #282828 simultaneously.
-
-**Scroll behavior**: the genre/category label at the top of a playlist view sticks below the global nav on scroll, then fades out at a threshold, replaced by the playlist title in the nav bar. This crossfade scroll transition is a signature Spotify web pattern.
-
-**Search autocomplete**: suggestions appear with a 100ms debounce after keystroke, sliding down from below the input at 150ms ease-out.
-
-## Accessibility
-
-### Contrast Ratios
-- **White (#FFFFFF) on canvas (#121212)**: 18.1:1 — passes AAA
-- **Muted (#A7A7A7) on canvas (#121212)**: 5.9:1 — passes AA, fails AAA
-- **Spotify Green (#1DB954) on canvas (#121212)**: 4.6:1 — passes AA (borderline; primarily used as fill, not text)
-- **Black (#000000) on Spotify Green (#1DB954)**: 7.8:1 — passes AAA (play button icon on green background)
-- **Muted (#A7A7A7) on Surface 2 (#282828)**: 4.7:1 — passes AA
-
-### Minimum Requirements
-- **Touch target**: 44×44px minimum — the play button on mobile is 56×56px for easy tap
-- **Focus indicator**: white 2px outline, visible on all dark surfaces
-- **Progress bar scrubber**: must be at least 12×12px to meet touch target minimums
-
-### Motion
-- Respects `prefers-reduced-motion`: yes — dynamic background color transitions and card hover animations should be suppressed
-- Album art cross-fade should fall back to instant cut under reduced motion
-- Equalizer bar animation (three bouncing bars on currently playing track) must respect `prefers-reduced-motion`
-
-### Notes
-- Dynamic album art color extraction may produce colors that fail contrast when used as backgrounds with white text — always overlay a darkening gradient (minimum 50% black at text positions) over extracted colors before rendering white text on top
-- The green (#1DB954) at 4.6:1 on canvas passes AA for UI components (3:1 threshold) but is borderline for normal text — avoid using it for body copy; use white for all legibility-critical text
-- Spotify's "Currently Playing" equalizer animation (three animated bars next to the track name) is a motion element that should be replaceable with a static icon under `prefers-reduced-motion`
-
-</design-context>
-
-Use the design system above for all UI you generate.
+### Lists & Activity Feeds
+Rows should have a subtle hover state (background change to `#F1F5F9`). Use `label-mono` for all time-entry durations to ensure vertical alignment of digits.
