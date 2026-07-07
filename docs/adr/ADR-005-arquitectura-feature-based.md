@@ -2,7 +2,7 @@
 
 Estado: Accepted
 Fecha de creación: 2026-07-06
-Última actualización: 2026-07-06
+Última actualización: 2026-07-07
 Decisores: Equipo de desarrollo
 Etiquetas: architecture, feature-based, project-structure
 
@@ -26,6 +26,14 @@ El código fuente se organiza principalmente por feature/dominio de negocio: cad
 
 - Requiere criterio consistente para decidir qué código es "compartido" vs "de feature"; aplicado de forma inconsistente puede derivar en duplicación.
 - Puede introducir una capa adicional de indirección para funcionalidad muy pequeña que no justifica su propio módulo de feature.
+
+## Fitness function
+
+Apto: Sí
+Estado: Creada
+Herramienta: Vitest (script de test sobre el árbol de imports)
+Ubicación: src/architecture/adr-005-feature-isolation.test.ts
+Comando: npx vitest run src/architecture/adr-005-feature-isolation.test.ts
 
 ## Referencias
 

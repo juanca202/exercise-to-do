@@ -2,7 +2,7 @@
 
 Estado: Accepted
 Fecha de creación: 2026-07-06
-Última actualización: 2026-07-06
+Última actualización: 2026-07-07
 Decisores: Equipo de desarrollo
 Etiquetas: git, branching, gitflow, conventional-commits, release
 
@@ -27,6 +27,14 @@ El proyecto adopta **GitFlow** como estrategia de branching: dos ramas de larga 
 
 - GitFlow añade más ramas y pasos de proceso que modelos más simples (p. ej. trunk-based development), lo que puede ralentizar equipos que buscan despliegue continuo muy frecuente.
 - Conventional Commits requiere disciplina del equipo; sin una verificación automatizada (p. ej. un hook de `commit-msg`), su aplicación puede volverse inconsistente.
+
+## Fitness function
+
+Apto: Sí
+Estado: Creada
+Herramienta: Vitest (script de verificación de config y rama actual)
+Ubicación: src/architecture/adr-010-branching-conventional-commits.test.ts
+Comando: npx vitest run src/architecture/adr-010-branching-conventional-commits.test.ts
 
 ## Referencias
 
