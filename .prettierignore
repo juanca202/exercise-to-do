@@ -9,8 +9,13 @@ next-env.d.ts
 # tooling/skills gestionados externamente, no código del proyecto
 .agents
 .claude
+.cursor
 skills-lock.json
+AGENTS.md
+CLAUDE.md
+README.md
+DESIGN.md
 
 # especificaciones y decisiones: formato propio de sus plantillas, no se reformatean
-docs/adr
-docs/specs
+docs
+openspec

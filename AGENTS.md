@@ -13,7 +13,7 @@
 
 ## Reglas generales
 
-## Convensiones
+### Convenciones
 
 ## Stack tecnológico
 
