@@ -1,7 +1,16 @@
-node_modules
 .next
-out
-build
 coverage
-pnpm-lock.yaml
-package-lock.json
+playwright-report
+test-results
+blob-report
+node_modules
+next-env.d.ts
+
+# tooling/skills gestionados externamente, no código del proyecto
+.agents
+.claude
+skills-lock.json
+
+# especificaciones y decisiones: formato propio de sus plantillas, no se reformatean
+docs/adr
+docs/specs
