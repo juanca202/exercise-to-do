@@ -7,7 +7,8 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "../..");
 
-const GITFLOW_BRANCH_REGEX = /^(main|develop|feature\/.+|release\/.+|hotfix\/.+)$/;
+const GITFLOW_BRANCH_REGEX =
+  /^(main|develop|feature\/.+|release\/.+|hotfix\/.+)$/;
 
 describe("ADR-010: estrategia de branching GitFlow con Conventional Commits", () => {
   it("el hook commit-msg de Husky invoca commitlint", () => {

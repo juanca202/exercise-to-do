@@ -1,5 +1,5 @@
-import { HomePage } from "@/features/home/components/home-page";
+import { TasksPage } from "@/features/tasks/components/tasks-page";
 
 export default function Page() {
-  return <HomePage />;
+  return <TasksPage />;
 }

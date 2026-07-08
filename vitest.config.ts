@@ -11,6 +11,13 @@ export default defineConfig({
   },
   test: {
     environment: "jsdom",
+    environmentOptions: {
+      jsdom: {
+        // jsdom solo habilita localStorage/sessionStorage para un origen http(s) real,
+        // no para el "about:blank" por defecto.
+        url: "http://localhost",
+      },
+    },
     setupFiles: ["./vitest.setup.ts"],
     globals: false,
     exclude: [
