@@ -49,7 +49,7 @@ colors:
   on-background: '#191c1e'
   surface-variant: '#e0e3e5'
 typography:
-  display-time:
+  display-count:
     fontFamily: Inter
     fontSize: 48px
     fontWeight: '700'
@@ -75,7 +75,7 @@ typography:
     fontSize: 14px
     fontWeight: '400'
     lineHeight: 20px
-  label-mono:
+  label-meta:
     fontFamily: JetBrains Mono
     fontSize: 12px
     fontWeight: '500'
@@ -102,29 +102,29 @@ spacing:
 ---
 
 ## Brand & Style
-The design system is engineered for deep work and high-output productivity. The brand personality is disciplined, unobtrusive, and systematic. It aims to evoke a sense of "flow state" by removing visual clutter and prioritizing task-critical information. 
+The design system is engineered for clarity and everyday productivity. The brand personality is disciplined, unobtrusive, and systematic. It aims to evoke a sense of "flow state" by removing visual clutter and prioritizing task-critical information.
 
-The aesthetic follows a **Modern Minimalist** approach with a **Functional/SaaS** core. It utilizes heavy whitespace to reduce cognitive load, high-quality typography for temporal data legibility, and a card-based architecture to organize complex project hierarchies. The emotional response should be one of professional reliability and calm efficiency, ensuring that the tool never competes with the user's work for attention.
+The aesthetic follows a **Modern Minimalist** approach with a **Functional/SaaS** core. It utilizes heavy whitespace to reduce cognitive load, high-quality typography for legibility, and a card-based architecture to organize task lists. The emotional response should be one of professional reliability and calm efficiency, ensuring that the tool never competes with the user's work for attention.
 
 ## Colors
 This design system utilizes a focused palette designed to guide the eye toward action and status.
 
 - **Primary (Deep Indigo):** Used for navigation, primary buttons, and headings. It provides a grounded, professional foundation.
-- **Secondary (Mint Green):** Reserved exclusively for "Active" states, running timers, and positive progress indicators. It provides a clear, non-aggressive signal of life.
+- **Secondary (Mint Green):** Reserved exclusively for "Completed" states and positive progress indicators. It provides a clear, non-aggressive signal of accomplishment.
 - **Tertiary (Slate):** Used for secondary text, icons, and metadata to maintain a clear hierarchy without the harshness of pure black.
 - **Neutral (Soft Gray/White):** A multi-layered background system using `#F8FAFC` for the base and white for elevated cards to create subtle depth.
 
 ## Typography
-The typography system prioritizes tabular precision and hierarchy. **Inter** is the workhorse for the interface, chosen for its exceptional legibility in small sizes and its neutral, professional character.
+The typography system prioritizes clarity and hierarchy. **Inter** is the workhorse for the interface, chosen for its exceptional legibility in small sizes and its neutral, professional character.
 
-For numerical data, durations, and timestamps, a monospaced font (**JetBrains Mono**) is introduced in label roles to ensure that numbers align perfectly in lists and reports, preventing "jumping" text during active timer counts. 
+For counters and metadata, a monospaced font (**JetBrains Mono**) is introduced in label roles to ensure that numbers align perfectly in lists and reports, preventing "jumping" text as task counts update.
 
-- **Display Time:** Large, bold Inter for the primary active timer.
+- **Display Count:** Large, bold Inter for pending/completed task counters.
 - **Headlines:** Semi-bold for clear section demarcation.
-- **Labels:** Monospaced for all duration-based data to maintain alignment in dense tables.
+- **Labels:** Monospaced for counters and metadata to maintain alignment in dense lists.
 
 ## Layout & Spacing
-The layout uses a **Fixed Grid** system for desktop to ensure the productivity dashboard remains organized and predictable, transitioning to a **Fluid Grid** for mobile.
+The layout uses a **Fixed Grid** system for desktop to ensure the task list remains organized and predictable, transitioning to a **Fluid Grid** for mobile.
 
 - **Desktop:** 12-column grid with a 24px gutter. Content is housed in a 1280px max-width container.
 - **Sidebar:** A fixed 280px navigation rail on the left.
@@ -136,7 +136,7 @@ This design system uses **Tonal Layers** combined with **Ambient Shadows** to cr
 
 - **Level 0 (Base):** The `#F8FAFC` background.
 - **Level 1 (Cards):** White surfaces with a subtle 1px border (`#E2E8F0`) and a soft, highly diffused shadow (Offset: 0, 4px; Blur: 12px; Opacity: 4% Black).
-- **Level 2 (Active/Hover):** When a card or timer is active, the shadow deepens (Opacity: 8%) and a 2px Mint Green left-border is applied to indicate focus.
+- **Level 2 (Active/Hover):** When a task card is focused or hovered, the shadow deepens (Opacity: 8%) and a 2px Mint Green left-border is applied to indicate focus.
 - **Modals:** High-contrast elevation with a backdrop blur (8px) to isolate the user's task.
 
 ## Shapes
@@ -145,22 +145,3 @@ A **Soft** shape language is employed to balance the professional indigo tones.
 - **Standard Elements:** Buttons, input fields, and small cards use a 0.25rem (4px) radius to maintain a crisp, efficient look.
 - **Containers:** Large project cards and dashboard widgets use a 0.5rem (8px) radius.
 - **Status Pills:** Fully rounded (pill-shaped) to distinguish them from interactive buttons.
-
-## Components
-### Timer Buttons
-Primary action buttons for "Start" use the Primary Indigo. When active, the button transforms into a "Stop" action using a subtle coral/red tint, while the surrounding card container gains a Mint Green pulse or steady border.
-
-### Activity Charts
-Bar and line charts should use the Primary Indigo for historical data and Mint Green for the current day's progress. Use thin 1px grid lines in `#F1F5F9`.
-
-### Project Cards
-Cards must include:
-- A title in `body-lg` (Semi-bold).
-- A duration label in `label-mono`.
-- A subtle progress bar at the bottom of the card using the Secondary Mint Green.
-
-### Input Fields
-Clean, outlined inputs with a 1px `#CBD5E1` border. On focus, the border shifts to Primary Indigo with a 2px soft glow. Labels should always be visible above the field in `label-mono` at 50% opacity.
-
-### Lists & Activity Feeds
-Rows should have a subtle hover state (background change to `#F1F5F9`). Use `label-mono` for all time-entry durations to ensure vertical alignment of digits.
