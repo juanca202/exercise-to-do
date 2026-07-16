@@ -14,3 +14,6 @@ skills-lock.json
 # especificaciones y decisiones: formato propio de sus plantillas, no se reformatean
 docs/adr
 docs/specs
+
+AGENTS.md
+CLAUDE.md
