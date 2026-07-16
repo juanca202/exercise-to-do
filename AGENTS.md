@@ -13,7 +13,7 @@
 
 ## Reglas generales
 
-## Convensiones
+- Nombres de clases, métodos, variables y rutas (routes) deben estar en inglés.
 
 ## Stack tecnológico
 
