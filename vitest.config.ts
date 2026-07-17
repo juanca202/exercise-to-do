@@ -21,6 +21,8 @@ export default defineConfig({
       "**/.{idea,git,cache,output,temp}/**",
       "**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,tsup,build}.config.*",
       "e2e/**",
+      "**/.worktrees/**",
+      "**/worktrees/**",
     ],
     coverage: {
       provider: "v8",
