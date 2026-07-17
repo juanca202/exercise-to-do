@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
+import { MainNav } from "@/shared/components/main-nav";
 import "@/shared/styles/globals.css";
 
 const geistSans = Geist({
@@ -13,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mis tareas",
-  description: "Gestiona tus tareas diarias en el navegador",
+  title: "Mis tareas y notas",
+  description: "Gestiona tus tareas y notas diarias en el navegador",
 };
 
 export default function RootLayout({
@@ -27,6 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
+        <MainNav />
         {children}
       </body>
     </html>
