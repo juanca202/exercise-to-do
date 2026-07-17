@@ -1,0 +1,18 @@
+{
+  "schema": "test-run/v1",
+  "generatedBy": "code-review",
+  "timestamp": "2026-07-17T00:20:00-05:00",
+  "work": "feature/lab-openspec-superpowers",
+  "git": {
+    "branch": "feature/lab-openspec-superpowers",
+    "commit": "aa73c3b",
+    "workingTreeClean": false,
+    "fingerprint": "8abba15a9401c2fa6b69af6c3128592bfacdd49d"
+  },
+  "suites": [
+    { "type": "unit", "command": "npm test", "result": "PASS", "summary": "58 passed (8 files)" },
+    { "type": "coverage", "command": "npm run test:coverage", "result": "PASS", "summary": "stmts 89.92%, branches 83.53%, funcs 93.13%, lines 89.25% (threshold 80%)" },
+    { "type": "integration", "command": "N/A", "result": "N/A", "summary": "sin suite de integración separada" },
+    { "type": "e2e", "command": "npm run test:e2e", "result": "PASS", "summary": "28 passed" }
+  ]
+}
